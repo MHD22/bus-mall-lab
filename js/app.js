@@ -23,6 +23,8 @@ var names=[
     'wine-glass'
 ]
 
+var rounds =1 ; // to keep track of round number from 1-25 
+
 var productsArray=[];
 // declare the constructor:
 function Product(pName){
@@ -51,51 +53,41 @@ function renderImages(){
     // get three different random numbers in an array.
     var randArray = getThreeDiffRandom(0 , ( productsArray.length -1 ));
     
-
+    
     //pick three random products..
     product1 = productsArray[randArray[0]];
     product2 = productsArray[randArray[1]];
     product3 = productsArray[randArray[2]];
+    render();//render them.
     
-    // render the products' images
-    img1.src=product1.productImagePath;
-    img2.src=product2.productImagePath;
-    img3.src=product3.productImagePath;
-
-    // add views' value to these products.
-    product1.views ++;
-    product2.views ++;
-    product3.views ++;
-
+    var roundText = document.getElementById('round-text'); // to display the round number.
+    roundText.textContent=`   ${rounds}`;
+    
 }
 renderImages();
 
 
 // add event listener to the images container ...
 var imagesContainer = document.getElementById('imgs');
+imagesContainer.addEventListener('click',onImageContainerClick);
 
-imagesContainer.addEventListener('click',function(event){
 
-    //check which one was clicked..
-    var clickedID = event.target.id ;
+// render the results after the last round 
+var ulResult = document.getElementById('ul-result');
+
+function renderResults(){
     
-    if(clickedID !== 'imgs'){ // the user didn't click on the images container.
-        
-        if(clickedID === 'img1'){
-            product1.clicks ++ ;  // increase the clicks value for first image if it was clicked
-        }
-        else if (clickedID ==='img2'){
-            product2.clicks ++ ;
-        }
-        else if (clickedID ==='img3'){
-            product3.clicks ++ ;
-        }
-        renderImages(); // render next new three images..
+    imagesContainer.removeEventListener('click',onImageContainerClick); //remove the event listener
+    
+    for ( let i=0; i< productsArray.length; i++ ){ 
+        var li =document.createElement('li');
+
+        var item = productsArray[i];
+        li.textContent= `${item.productName} had ${item.clicks} votes, and was seen ${item.views} times.`;
+        ulResult.appendChild(li);
     }
 
-});
-
-
+}
 
 
 
@@ -120,4 +112,50 @@ function getThreeDiffRandom(min,max){
    }
 
    return [rand1,rand2,rand3]; // return an array of three different random values
+}
+
+function render(){
+    
+    // render the products' images
+    img1.src=product1.productImagePath;
+    img2.src=product2.productImagePath;
+    img3.src=product3.productImagePath;
+
+     // add views' value to these products.
+     product1.views ++;
+     product2.views ++;
+     product3.views ++;
+
+     // set  the title attribute for  images
+    img1.title=product1.productName;
+    img2.title=product2.productName;
+    img3.title=product3.productName;
+}
+
+function onImageContainerClick(event){
+
+    //check which one was clicked..
+    var clickedID = event.target.id ;
+    
+    if(clickedID !== 'imgs'){ // the user didn't click on the images container.
+        
+        if(clickedID === 'img1'){
+            product1.clicks ++ ;  // increase the clicks value for first image if it was clicked
+        }
+        else if (clickedID ==='img2'){
+            product2.clicks ++ ;
+        }
+        else if (clickedID ==='img3'){
+            product3.clicks ++ ;
+        }
+
+        if(rounds ===25){ //check if this was the last round.
+            renderResults();//delete the listener and show the results.
+        }
+        else{
+            rounds++; // increase the rounds value by one
+            renderImages(); // render next new three images..
+        }
+    }
+
 }
