@@ -1,0 +1,120 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #adb7af8a;
+}
+header{
+    min-height: 70px;
+    line-height: 70px;
+    position: fixed;
+    top:0;
+    width: 100%;
+    background-color: #4C5760;
+    box-shadow: 0px 2px 2px 3px #525352ce;
+    padding: 0px 20px;
+    z-index: 1;
+}
+nav img{
+   border-radius: 100%;
+   float: left;
+   margin-right: 20px;
+   margin-top: 10px;
+   
+}
+nav h1{
+    color: #cfcfcf;
+    font-weight: bold;
+    font-size: 2.5em;
+    text-shadow: 3px 2px 2px rgb(46, 45, 45);
+    margin: 0;
+}
+
+/* start the main */
+main{
+    margin-top: 75px;
+    width: 100%;
+    
+}
+article{
+    position: relative;
+    display: flex;
+
+}
+section.results{
+    height: 70vh;
+    float: left;
+    width: 30%;
+    background-color: #C2C3B1;
+    box-shadow: 0px 2px 2px 3px #9a9b94;
+    overflow-y: auto;
+
+}
+section.images{
+    min-height: 50vh;
+    width: 100%;
+    background-color: #6c7b820a;
+    box-shadow: 0px 2px 2px 3px #9a9b94;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding:0 30px 30px 30px;
+}
+#imgs{
+    display: flex;
+    width: 100%;
+    margin:0;
+    padding: 0 15px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.images h1{
+    width: 100%;
+    text-align: center;
+    font-size: 2.2em;
+    margin: 0;
+    color: rgba(31, 30, 30, 0.87);
+    padding: 20px;
+}
+.images img{
+    border-radius: 20px;
+    width: 300px;
+    height: 300px;
+    box-shadow: 0px 2px 2px 3px #5a5a58d8;
+    margin-bottom: 15px;
+
+}
+/* results */
+.results ul{
+    list-style: circle;
+    line-height: 30px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #262c31;
+}
+
+
+
+
+/* footer */
+footer{
+    min-height: 70px;
+    line-height: 70px;
+    width: 100%;
+    background-color: #4C5760;
+    box-shadow: 0px -2px 2px 3px #525352ce;
+    padding: 0px 20px;
+    margin-top: 150px;
+    margin-bottom: 0;
+    
+}
+footer h4{
+    margin: 0;
+}
