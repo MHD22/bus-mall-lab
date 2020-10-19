@@ -22,7 +22,7 @@ var names=[
     'water-can',
     'wine-glass'
 ]
-
+var randomArray=[];
 var rounds =1 ; // to keep track of round number from 1-25 
 
 var productsArray=[];
@@ -89,6 +89,54 @@ function renderResults(){
 
 }
 
+// display the chart: 
+function renderChart(){
+
+    // collect the data
+    var dataArray=[ [] , [] , [] ]; // names , views, clicks
+
+    for (let i=0; i< productsArray.length; i++){
+        dataArray[0].push(productsArray[i].productName);
+        dataArray[1].push(productsArray[i].views);
+        dataArray[2].push(productsArray[i].clicks);
+    }
+
+    // draw the chart on the canvas element:
+    var ctx = document.getElementById('my-chart').getContext('2d');
+    var myChart = new Chart(ctx, {  //this code from Chart.js API .. 
+        type: 'bar',
+        data: {
+            labels: dataArray[0],//products name
+            datasets: [
+                {
+                label: '# of Clicks',
+                data: dataArray[2],                             //clicks
+                backgroundColor: 'rgba(50, 175, 50, 0.6)',
+                borderColor: '#4C5760',
+                borderWidth: 3
+                 },
+                    //second label
+                 {
+                    label: '# of Views',
+                    data: dataArray[1],                             //clicks
+                    backgroundColor: '#4c5c69dc',
+                    borderColor:'rgba(50, 175, 50, 0.719)',
+                    borderWidth: 3
+                }
+        ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });    
+    console.log(myChart);
+}
 
 
 
@@ -97,21 +145,22 @@ function renderResults(){
 function randomInt(min,max){
     return Math.floor( Math.random()*(max-min +1) + min);
 }
+
 function getThreeDiffRandom(min,max){
     var rand1= randomInt(min,max); // return a random index to pick a random object from the products array..
     var rand2= randomInt(min,max); 
     var rand3= randomInt(min,max);
-
-    while(rand2 === rand1){ //change the second value if its equal the first.
-
-         rand2= randomInt(min,max);
+    
+    //check the randoms numbers are uniques and don't equal to any random number of the last round..
+    while(randomArray.includes(rand1) ||randomArray.includes(rand2)  ||randomArray.includes(rand3) || rand2 === rand1 || rand3 === rand2 || rand3 === rand1  ){
+        rand1= randomInt(min,max);
+        rand2= randomInt(min,max);
+        rand3= randomInt(min,max);
     }
-    while(rand3 === rand2 || rand3 === rand1){ //change the second value if its equal the first.
+    randomArray=[rand1,rand2,rand3];
 
-         rand3= randomInt(min,max);
-   }
 
-   return [rand1,rand2,rand3]; // return an array of three different random values
+    return randomArray; // return an array of three different random values
 }
 
 function render(){
@@ -151,6 +200,7 @@ function onImageContainerClick(event){
 
         if(rounds ===25){ //check if this was the last round.
             renderResults();//delete the listener and show the results.
+            renderChart();
         }
         else{
             rounds++; // increase the rounds value by one
