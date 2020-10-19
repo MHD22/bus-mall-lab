@@ -15,28 +15,34 @@
     </header>
     <main>
         <article>
-            <section class="results">
-                <h3>Results:</h3>
-                <ul id="ul-result">
-                    
-                </ul>
-            </section>
-            <section class="images">
-                <h1>Select your favorite one.<br><span>Round <span id="round-text"> 1</span>/25 </span></h1>
-                <div id="imgs">
-                    <img id="img1" src="img/banana.jpg" alt="first product" >
-                    <img id="img2" src="img/boots.jpg" alt=" second product" >
-                    <img id="img3" src="img/cthulhu.jpg" alt="third product">
-                </div>
-
-            </section>
-            <section class="text"></section>
+            <div class="cont">
+                <section class="results">
+                    <h3>Results:</h3>
+                    <ul id="ul-result">
+                        
+                    </ul>
+                </section>
+                <section class="images">
+                    <h1>Select your favorite one.<br><span>Round <span id="round-text"> 1</span>/25 </span></h1>
+                    <div id="imgs">
+                        <img id="img1" src="img/banana.jpg" alt="first product" >
+                        <img id="img2" src="img/boots.jpg" alt=" second product" >
+                        <img id="img3" src="img/cthulhu.jpg" alt="third product">
+                    </div>
+    
+                </section>    
+            </div>
+            <div style="clear: both; height: .5px; margin-bottom: 20px;"></div>
+            <div id="cont">
+                <canvas id="my-chart" hidden></canvas>
+            </div>
+            
         </article>
     </main>
     <footer>
         <h4>All rights reserved &copy; 2020</h4>
     </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
