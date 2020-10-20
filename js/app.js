@@ -23,9 +23,9 @@ var names=[
     'wine-glass'
 ]
 var randomArray=[];
-var rounds =1 ; // to keep track of round number from 1-25 
+var rounds = Number(localStorage.getItem('roundsNumber'))|| 1 ; // to keep track of round number from 1-25 
 
-var productsArray=[];
+var productsArray=JSON.parse( localStorage.getItem('productsArray'))||[];
 // declare the constructor:
 function Product(pName){
     this.productName = pName.includes('.')? pName.slice(0, pName.indexOf('.')) : pName; // check if the pName has an extension? , truncate the string and return the name without the extension
@@ -36,9 +36,12 @@ function Product(pName){
 }
 
 //create instances of Product:
-for(let i=0 ; i<names.length ; i++){
-    new Product(names[i]);
+if(! productsArray.length){
+    for(let i=0 ; i<names.length ; i++){
+        new Product(names[i]);
+    }
 }
+
 
 // render three different images at a time..
 var img1= document.getElementById('img1');
@@ -64,12 +67,15 @@ function renderImages(){
     roundText.textContent=`   ${rounds}`;
     
 }
-renderImages();
+    renderImages();
 
 
 // add event listener to the images container ...
 var imagesContainer = document.getElementById('imgs');
-imagesContainer.addEventListener('click',onImageContainerClick);
+
+if(rounds < 25){
+    imagesContainer.addEventListener('click',onImageContainerClick);
+}
 
 
 // render the results after the last round 
@@ -87,6 +93,10 @@ function renderResults(){
         ulResult.appendChild(li);
     }
 
+}
+if(rounds === 25){
+    renderChart();
+    renderResults();
 }
 
 // display the chart: 
@@ -118,7 +128,7 @@ function renderChart(){
                     //second label
                  {
                     label: '# of Views',
-                    data: dataArray[1],                             //clicks
+                    data: dataArray[1],                             //views
                     backgroundColor: '#4c5c69dc',
                     borderColor:'rgba(50, 175, 50, 0.719)',
                     borderWidth: 3
@@ -170,15 +180,15 @@ function render(){
     img2.src=product2.productImagePath;
     img3.src=product3.productImagePath;
 
-     // add views' value to these products.
-     product1.views ++;
-     product2.views ++;
-     product3.views ++;
+    
+
+     
 
      // set  the title attribute for  images
     img1.title=product1.productName;
     img2.title=product2.productName;
     img3.title=product3.productName;
+
 }
 
 function onImageContainerClick(event){
@@ -197,13 +207,19 @@ function onImageContainerClick(event){
         else if (clickedID ==='img3'){
             product3.clicks ++ ;
         }
+         // add views' value to these products.
+        product1.views ++;
+        product2.views ++;
+        product3.views ++;
 
+        localStorage.setItem('productsArray',JSON.stringify(productsArray));
         if(rounds ===25){ //check if this was the last round.
             renderResults();//delete the listener and show the results.
             renderChart();
         }
-        else{
+        else if(rounds<25){
             rounds++; // increase the rounds value by one
+            localStorage.setItem('roundsNumber', rounds); // store the number of rounds into the local storage
             renderImages(); // render next new three images..
         }
     }
